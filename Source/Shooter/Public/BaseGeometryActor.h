@@ -30,6 +30,9 @@ struct FGeometryData
 
 	UPROPERTY(EditAnywhere)
 	float TimerRate = 1.0f;
+
+	UPROPERTY(EditAnywhere)
+	FLinearColor Color = FLinearColor::MakeRandomColor();
 	
 };
 
@@ -47,6 +50,7 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BaseMesh;
 
+	void SetGeometryData(const FGeometryData& Data) { GeometryData = Data; }
 	
 protected:
 	virtual void BeginPlay() override;
@@ -71,7 +75,7 @@ protected:
 	bool HasWeapon = true;
 
 	UPROPERTY(EditAnywhere)
-	FLinearColor MeshColor = FLinearColor::White;
+	FLinearColor MeshColor = GeometryData.Color;
 public:
 	virtual void Tick(float DeltaTime) override;
 
