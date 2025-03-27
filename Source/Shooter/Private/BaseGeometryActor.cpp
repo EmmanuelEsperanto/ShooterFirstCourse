@@ -26,11 +26,13 @@ void ABaseGeometryActor::OnTimerFired()
 	if(++CurrentTimerCount <= MaxTimerCount)
 	{
 		const FLinearColor NewColor = FLinearColor::MakeRandomColor();
+		OnColorChanged.Broadcast(NewColor, GetName());
 	
 		SetColor(NewColor);
 	} else
 	{
 		GetWorldTimerManager().ClearTimer(MyTimerHandle);
+		OnTimerFinished.Broadcast(this);
 	}
 }
 
@@ -96,6 +98,13 @@ void ABaseGeometryActor::HandleMovement()
 	case EMovementType::Static: break;
 	default: break;
 	}
+}
+
+void ABaseGeometryActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	UE_LOG(LogBaseGeometry, Error, TEXT("Actor is dead %s"), *GetName());
+	Super::EndPlay(EndPlayReason);
+
 }
 
 void ABaseGeometryActor::Tick(float DeltaTime)

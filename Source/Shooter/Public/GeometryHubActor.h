@@ -46,10 +46,17 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
 	void DoActorsSpawn();
 	
 	void DoActorsSpawnZ();
 
 	void DoActorsSpawnArray();
+	
+
+	UFUNCTION()
+	void OnColorChanged(const FLinearColor Color, const FString& Name);
+
+	void OnTimerFinished(AActor* AActor);
 
 };
